@@ -1,0 +1,51 @@
+{% extends 'base.html' %} 
+{%block title%} HomePage {% endblock %} 
+{% block content %}
+<table class="table mt-5 mb-5 mx-auto container">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Musician Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Album Rating</th>
+      <th scope="col">Instrument Type</th>
+      <th scope="col">Album Name</th>
+      <th scope="col">Release Date</th>
+      {% if user.is_authenticated %}
+      <th scope="col">Actions</th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {%for post in data %}
+    <tr>
+      <th scope="row">{{post.id}}</th>
+      <td>{{post.musician.first_name}}</td>
+      <td>{{post.musician.Email}}</td>
+      <td>{{post.album_rating}}</td>
+      <td>{{post.musician.Instrument_type}}</td>
+      <td>{{post.album_name}}</td>
+      <td>{{post.album_release_date}}</td>
+      <td>
+        {% if user.is_authenticated %}
+        <button class="btn btn-success mx-3">
+          <a
+            href="{% url 'edit_post' post.id %}"
+            class="text-decoration-none text-light"
+            >Edit</a
+          >
+        </button>
+        <button class="btn btn-danger">
+          <a
+            class="text-decoration-none text-light mx-2"
+            href="{% url 'delete' post.id %}"
+            >Delete</a
+          >
+        </button>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
